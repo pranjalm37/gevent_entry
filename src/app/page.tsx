@@ -1,21 +1,31 @@
 'use client';
 
-import { Compass, CheckSquare, QrCode, User } from 'lucide-react';
+import { useState } from 'react';
+import { Compass, CheckSquare, QrCode, User, Wifi } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { NavigateFeature } from '@/components/features/navigate-feature';
 import { CheckInFeature } from '@/components/features/check-in-feature';
-import { EntryQrFeature } from '@/components/features/entry-qr-feature';
 import { ProfileFeature } from '@/components/features/profile-feature';
-
-const tabItems = [
-  { value: 'navigate', label: 'Navigate', icon: Compass, component: <NavigateFeature /> },
-  { value: 'check-in', label: 'Check-in', icon: CheckSquare, component: <CheckInFeature /> },
-  { value: 'entry-qr', label: 'Entry QR', icon: QrCode, component: <EntryQrFeature /> },
-  { value: 'profile', label: 'Profile', icon: User, component: <ProfileFeature /> },
-];
+import { type AccessFormData } from '@/components/access-form';
+import { AccessFormFeature } from '@/components/features/access-form-feature';
+import { QrWifiFeature } from '@/components/features/qr-wifi-feature';
 
 export default function HomePage() {
+  const [formData, setFormData] = useState<AccessFormData | null>(null);
+
+  const handleFormSubmit = (data: AccessFormData) => {
+    setFormData(data);
+  };
+  
+  const tabItems = [
+    { value: 'navigate', label: 'Navigate', icon: Compass, component: <NavigateFeature /> },
+    { value: 'check-in', label: 'Check-in', icon: CheckSquare, component: <CheckInFeature /> },
+    { value: 'access-form', label: 'Access Form', icon: QrCode, component: <AccessFormFeature onSubmit={handleFormSubmit} /> },
+    { value: 'qr-wifi', label: 'QR & WiFi', icon: Wifi, component: <QrWifiFeature formData={formData} /> },
+    { value: 'profile', label: 'Profile', icon: User, component: <ProfileFeature /> },
+  ];
+
   return (
     <Tabs defaultValue="navigate" className="h-full w-full">
       {tabItems.map(item => (
@@ -28,7 +38,7 @@ export default function HomePage() {
         </TabsContent>
       ))}
 
-      <TabsList className="fixed bottom-0 left-0 right-0 z-10 grid h-16 w-full grid-cols-4 rounded-none border-t bg-background p-0 md:hidden">
+      <TabsList className="fixed bottom-0 left-0 right-0 z-10 grid h-16 w-full grid-cols-5 rounded-none border-t bg-background p-0 md:hidden">
         {tabItems.map(({ value, label, icon: Icon }) => (
           <TabsTrigger
             key={value}

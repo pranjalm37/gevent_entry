@@ -26,14 +26,14 @@ const formSchema = z.object({
   needsExtension: z.boolean().default(false),
 });
 
-type AccessFormValues = z.infer<typeof formSchema>;
+export type AccessFormData = z.infer<typeof formSchema>;
 
 interface AccessFormProps {
-  onSubmit: (data: AccessFormValues) => void;
+  onSubmit: (data: AccessFormData) => void;
 }
 
 export function AccessForm({ onSubmit }: AccessFormProps) {
-  const form = useForm<AccessFormValues>({
+  const form = useForm<AccessFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       fullName: '',
