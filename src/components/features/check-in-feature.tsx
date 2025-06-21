@@ -10,7 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 
 type Status = 'idle' | 'loading' | 'checkedIn';
 
-export default function CheckInPage() {
+export function CheckInFeature() {
   const [status, setStatus] = useState<Status>('idle');
   const [queuePosition, setQueuePosition] = useState(0);
   const [estimatedTime, setEstimatedTime] = useState(0);

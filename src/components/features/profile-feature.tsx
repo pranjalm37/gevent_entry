@@ -12,7 +12,7 @@ const ProfileMenuItem = ({ icon: Icon, label, hasChevron = true }: { icon: React
   </div>
 );
 
-export default function ProfilePage() {
+export function ProfileFeature() {
   return (
     <div className="container mx-auto max-w-lg px-4 py-8">
       <div className="flex flex-col items-center space-y-4 mb-8">

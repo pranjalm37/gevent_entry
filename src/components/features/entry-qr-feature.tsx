@@ -12,7 +12,7 @@ type FormData = {
   needsExtension: boolean;
 };
 
-export default function EntryQrPage() {
+export function EntryQrFeature() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [formData, setFormData] = useState<FormData | null>(null);
 
