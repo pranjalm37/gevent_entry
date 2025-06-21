@@ -1,14 +1,19 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { QrCode, Wifi, CheckCircle, Lock } from 'lucide-react';
+import { Wifi, CheckCircle, Lock } from 'lucide-react';
 import { Separator } from './ui/separator';
 
 interface QrCodeDisplayProps {
   formData: {
     fullName: string;
+    idType: string;
+    idNumber: string;
+    phoneNumber: string;
+    needsExtension: boolean;
   };
 }
 
@@ -21,6 +26,16 @@ export function QrCodeDisplay({ formData }: QrCodeDisplayProps) {
     setTimeout(() => setShowWifi(true), 500);
   };
 
+  const qrData = JSON.stringify({
+    fullName: formData.fullName,
+    idType: formData.idType,
+    idNumber: formData.idNumber,
+    phoneNumber: formData.phoneNumber,
+    needsExtension: formData.needsExtension,
+  });
+  const encodedQrData = encodeURIComponent(qrData);
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${encodedQrData}`;
+
   return (
     <Card className="w-full max-w-lg mx-auto text-center shadow-lg">
       <CardHeader>
@@ -29,7 +44,13 @@ export function QrCodeDisplay({ formData }: QrCodeDisplayProps) {
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-center gap-6">
         <div className="p-4 bg-white rounded-lg border shadow-inner">
-          <QrCode className="h-48 w-48 md:h-64 md:w-64 text-black" />
+          <Image
+            src={qrCodeUrl}
+            alt="QR Code for event entry"
+            width={256}
+            height={256}
+            className="h-48 w-48 md:h-64 md:w-64"
+          />
         </div>
         {!isValidated && (
           <Button onClick={handleValidation} className="font-headline">
