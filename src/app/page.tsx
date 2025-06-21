@@ -22,7 +22,7 @@ export default function HomePage() {
         <TabsContent
           key={item.value}
           value={item.value}
-          className="m-0 h-[calc(100vh_-_4rem)] overflow-y-auto data-[state=inactive]:hidden"
+          className="m-0"
         >
           {item.component}
         </TabsContent>
